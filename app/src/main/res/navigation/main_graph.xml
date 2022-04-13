@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/notes">
+
+    <fragment
+        android:id="@+id/notes"
+        android:name="android.andrespin.notes.notes.NotesFragment"
+        tools:layout="@layout/fragment_notes">
+
+        <action
+            android:id="@+id/action_notes_to_note"
+            app:destination="@id/note" />
+        <action
+            android:id="@+id/action_notes_to_profile"
+            app:destination="@id/profile" />
+
+    </fragment>
+
+
+
+
+
+    <fragment
+        android:id="@+id/note"
+        android:name="android.andrespin.notes.note.NoteFragment"
+        tools:layout="@layout/fragment_note">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="android.andrespin.notes.profile.my_profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profile_to_entrance"
+            app:destination="@id/entrance"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_profile_to_logging"
+            app:destination="@id/logging"
+            app:launchSingleTop="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/logging"
+        android:name="android.andrespin.notes.profile.logging.LoggingFragment"
+        tools:layout="@layout/fragment_logging">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/entrance"
+        android:name="android.andrespin.notes.profile.entrance.EntranceFragment"
+        tools:layout="@layout/fragment_entrance">
+
+    </fragment>
+
+
+</navigation>

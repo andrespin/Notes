@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="login">#C7D6FF</color>
+
+    <color name="dark_blue">#C7D6FF</color>
+
+    <!--    Item note colors-->
+    <color name="blue_light">#EEF7FE</color>
+    <color name="blue_checked">#8C63BAFD</color>
+    <color name="blue_note_txt">#415EB6</color>
+
+    <color name="yellow_light">#FFFBEC</color>
+    <color name="yellow_checked">#8CFAD75B</color>
+    <color name="yellow_note_txt">#FFB110</color>
+
+    <color name="red_light">#FEEEEE</color>
+    <color name="red_checked">#8CFF9393</color>
+    <color name="red_note_txt">#AC4040</color>
+
+    <color name="green_light">#F0FFFF</color>
+    <color name="green_checked">#8C97FFFF</color>
+    <color name="green_note_txt">#23B0B0</color>
+
+</resources>

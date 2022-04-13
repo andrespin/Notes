@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Вход"
+        android:textStyle="bold"
+        android:textColor="@color/green_note_txt"
+        android:textSize="38sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_back" />
+
+    <ImageView
+        android:id="@+id/imgEntrance"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/button_field_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRegistration" />
+
+    <ImageView
+        android:id="@+id/imgEnterPasswordAgain"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/button_field_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.675"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgEntrance" />
+
+
+    <ImageView
+        android:id="@+id/imgRegister"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/button_field_dark_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgEnterPasswordAgain" />
+
+    <EditText
+        android:id="@+id/editLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Введите логин"
+        android:background="@null"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgEntrance"
+        app:layout_constraintEnd_toEndOf="@+id/imgEntrance"
+        app:layout_constraintStart_toStartOf="@+id/imgEntrance"
+        app:layout_constraintTop_toTopOf="@+id/imgEntrance"
+        app:layout_constraintVertical_bias="0.487" />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Повторите пароль"
+        android:background="@null"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgEnterPasswordAgain"
+        app:layout_constraintEnd_toEndOf="@+id/imgEnterPasswordAgain"
+        app:layout_constraintStart_toStartOf="@+id/imgEnterPasswordAgain"
+        app:layout_constraintTop_toTopOf="@+id/imgEnterPasswordAgain" />
+
+    <TextView
+        android:id="@+id/editRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        android:textSize="18sp"
+        android:textColor="@color/blue_note_txt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imgRegister"
+        app:layout_constraintEnd_toEndOf="@+id/imgRegister"
+        app:layout_constraintStart_toStartOf="@+id/imgRegister"
+        app:layout_constraintTop_toTopOf="@+id/imgRegister" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
