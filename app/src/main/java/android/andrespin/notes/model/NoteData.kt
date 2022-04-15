@@ -13,3 +13,12 @@ data class NoteData(
     var checkedBackground: Int = 0,
     var checkedVisibility: Int = View.INVISIBLE
 )
+
+data class RegData(
+    val login: String?,
+    val password: String?
+)
+
+data class Time(val h: String, val m: String, val s: String)
+
+data class Date(val d: String, val m: String, val y: String, val nameOfMonth: String? = null)

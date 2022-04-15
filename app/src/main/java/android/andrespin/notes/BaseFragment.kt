@@ -1,5 +1,9 @@
 package android.andrespin.notes
 
+import android.andrespin.notes.model.RegData
+import android.andrespin.notes.model.login_key
+import android.andrespin.notes.model.password_key
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -69,19 +73,5 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(viewModelClass)
     }
-
-//    fun NavController.safeNavigate(direction: Int) {
-//        val controller = findNavController()
-//        if (controller.currentDestination?.id == R.id.notes) {
-//            controller.navigate(direction)
-//        }
-//    }
-//
-//    fun NavController.safeNavigate(direction: Int, bundle: Bundle) {
-//        val controller = findNavController()
-//        if (controller.currentDestination?.id == R.id.notes) {
-//            controller.navigate(direction, bundle)
-//        }
-//    }
 
 }

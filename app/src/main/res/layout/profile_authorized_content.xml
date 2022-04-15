@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="andrespin"
+        android:text=""
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +63,11 @@
         android:id="@+id/imgRedRoundAuthorized"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:layout_marginRight="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="18dp"
         android:src="@drawable/ic_red_round"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/switchSyncing"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/txtSyncDataInCloudAuthorized"
+        app:layout_constraintEnd_toStartOf="@+id/switchSyncing" />
 
     <TextView
         android:id="@+id/txtSyncingHelpAuthorized"
@@ -80,5 +80,28 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/txtSyncDataInCloudAuthorized"
         app:layout_constraintTop_toBottomOf="@+id/txtSyncDataInCloudAuthorized" />
+
+    <ImageView
+        android:id="@+id/imgLogOut"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSyncingHelpAuthorized"
+        app:srcCompat="@drawable/ic_exit" />
+
+    <TextView
+        android:id="@+id/txtLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Выйти"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogOut" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

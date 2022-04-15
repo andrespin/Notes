@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuSortByDateInAscendingOrder"
+        android:title="по дате в порядке возрастания" />
+
+    <item
+        android:id="@+id/menuSortByDateInDescendingOrder"
+        android:title="по дате в порядке убывания" />
+
+    <item
+        android:id="@+id/menuSortByNoteSizeInAscendingOrder"
+        android:title="по возрастанию размера заметки" />
+
+    <item
+        android:id="@+id/menuSortByNoteSizeInDescendingOrder"
+        android:title="по убыванию размера заметки" />
+
+</menu>

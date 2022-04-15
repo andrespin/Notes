@@ -19,6 +19,7 @@ class CurrentTime(
             .launch {
                 while (isActive) {
                     mutableTimeAndDate.value = getCurrentTimeAndDate()
+                //    println("getCurrentTimeAndDate() ${getCurrentTimeAndDate()}")
                     delay(20)
                 }
             }

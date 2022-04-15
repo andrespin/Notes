@@ -3,6 +3,7 @@ package android.andrespin.notes.profile.my_profile
 import android.andrespin.notes.BaseFragment
 import android.andrespin.notes.R
 import android.andrespin.notes.databinding.FragmentProfileBinding
+import android.andrespin.notes.model.RegData
 import android.andrespin.notes.profile.my_profile.intent.ProfileIntent
 import android.andrespin.notes.profile.my_profile.intent.ProfileState
 import android.view.LayoutInflater
@@ -10,10 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
 
     override val viewModelClass: Class<ProfileViewModel>
@@ -24,13 +29,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     override fun setUpViews() {
         observeViewModel()
+
     }
 
     private fun observeViewModel() {
         lifecycleScope.launch {
             viewModel.state.collect {
                 when (it) {
-                    is ProfileState.ProfileIsAuthorized -> showAuthorizedProfile()
+                    is ProfileState.ProfileIsAuthorized -> showAuthorizedProfile(it.data)
                     is ProfileState.ProfileIsNotAuthorized -> showNotAuthorizedProfile()
                 }
             }
@@ -38,19 +44,38 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun showNotAuthorizedProfile() {
+        println("Not Authorized")
         showNotAuthorizedContent()
-        initAuthorizedContentListeners()
+        initNotAuthorizedListenersContent()
     }
 
-    private fun showNotAuthorizedContent() {
-        viewBinding.authorized.root.visibility = View.GONE
-        viewBinding.notAuthorized.root.visibility = View.VISIBLE
+    private fun showAuthorizedProfile(data: RegData) {
+        showAuthorizedContent()
+        initAuthorizedContentListeners()
+        setAuthorizedContent(data)
+    }
+
+    private fun setAuthorizedContent(data: RegData) = with(viewBinding.authorized) {
+        txtLoginAuthorized.text = data.login
     }
 
     private fun initAuthorizedContentListeners() {
         with(viewBinding.authorized) {
             imgBackAuthorized.setOnClickListener {
-                findNavController().popBackStack()
+                lifecycleScope.launch {
+                    coroutineScope {
+                        val send = launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
+                            viewModel.intent.send(ProfileIntent.LogOut)
+                        }
+                        val back = launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
+                            findNavController().popBackStack()
+                        }
+                        send.start()
+                        send.join()
+                        back.start()
+                        back.join()
+                    }
+                }
             }
 
             switchSyncing.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -64,15 +89,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                     }
                 }
             }
+
+            imgLogOut.setOnClickListener {
+                lifecycleScope.launch {
+                    viewModel.intent.send(ProfileIntent.LogOut)
+                }
+            }
+
+
         }
 
     }
 
-    private fun showAuthorizedProfile() {
-        viewBinding.authorized.root.visibility = View.GONE
-        viewBinding.notAuthorized.root.visibility = View.VISIBLE
-        initNotAuthorizedListenersContent()
-    }
 
     private fun initNotAuthorizedListenersContent() {
         with(viewBinding.notAuthorized) {
@@ -85,12 +113,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 findNavController().navigate(R.id.action_profile_to_entrance)
                 println("Click")
             }
-
-            imgRegistration.setOnClickListener {
-                findNavController().navigate(R.id.action_profile_to_logging)
-            }
-
         }
     }
+
+    private fun showAuthorizedContent() {
+        viewBinding.authorized.root.visibility = View.VISIBLE
+        viewBinding.notAuthorized.root.visibility = View.GONE
+    }
+
+    private fun showNotAuthorizedContent() {
+        viewBinding.authorized.root.visibility = View.GONE
+        viewBinding.notAuthorized.root.visibility = View.VISIBLE
+    }
+
 
 }

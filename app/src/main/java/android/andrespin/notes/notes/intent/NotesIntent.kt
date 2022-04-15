@@ -1,5 +1,8 @@
 package android.andrespin.notes.notes.intent
 
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+
 sealed class NotesIntent {
 
 
@@ -8,6 +11,14 @@ sealed class NotesIntent {
     object DeleteCheckedNotes : NotesIntent()
 
     object CancelCheckedNotes : NotesIntent()
+
+    object SetSortByDateInAscendingOrder : NotesIntent()
+
+    object SetSortByDateInDescendingOrder : NotesIntent()
+
+    object SetSortByNoteSizeInAscendingOrder : NotesIntent()
+
+    object SetSortByNoteSizeInDescendingOrder : NotesIntent()
 
     data class LongItemClickEvent(val id: Int, val position: Int) : NotesIntent()
 

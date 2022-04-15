@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="38dp"
@@ -40,7 +40,7 @@
         tools:text="andrespin" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgRedRound"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginTop="24dp"
@@ -57,7 +57,7 @@
         app:layout_constraintGuide_begin="76dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtSortType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -68,13 +68,13 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <ImageView
-        android:id="@+id/imgRegistration"
+        android:id="@+id/imgSortType"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
         android:src="@drawable/ic_arrow_down_svgrepo_com"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/txtSortType"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <ImageView

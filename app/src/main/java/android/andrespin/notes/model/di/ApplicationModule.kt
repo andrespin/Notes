@@ -5,6 +5,8 @@ import android.andrespin.notes.utils.converter.DataTypes
 import android.andrespin.notes.utils.converter.TimeAndDate
 import android.andrespin.notes.utils.marker.INotesMarker
 import android.andrespin.notes.utils.marker.NotesMarker
+import android.andrespin.notes.utils.sorter.ISorter
+import android.andrespin.notes.utils.sorter.Sorter
 import android.andrespin.notes.utils.watch.CurrentTime
 import android.andrespin.notes.utils.watch.ICurrentTime
 import dagger.Module
@@ -34,6 +36,9 @@ class ApplicationModule {
     internal fun provideConv(): DataTypes = Converter()
 
     @Provides
-    internal fun provideMarker() : INotesMarker = NotesMarker()
+    internal fun provideMarker(): INotesMarker = NotesMarker()
+
+    @Provides
+    fun provideSorter(): ISorter = Sorter()
 
 }

@@ -2,17 +2,18 @@ package android.andrespin.notes.notes
 
 import android.andrespin.notes.BaseViewModel
 import android.andrespin.notes.model.NoteData
-import android.andrespin.notes.model.colorCheckedList
-import android.andrespin.notes.model.colorList
+import android.andrespin.notes.model.RegData
 import android.andrespin.notes.model.database.NoteEntity
+import android.andrespin.notes.model.di.RegPreference
 import android.andrespin.notes.model.interactor.Interactor
+import android.andrespin.notes.model.login_key
+import android.andrespin.notes.model.password_key
 import android.andrespin.notes.notes.intent.NotesEvent
 import android.andrespin.notes.notes.intent.NotesIntent
 import android.andrespin.notes.notes.intent.NotesState
 import android.andrespin.notes.utils.converter.DataTypes
-import android.andrespin.notes.utils.converter.TimeAndDate
 import android.andrespin.notes.utils.marker.INotesMarker
-import android.view.View
+import android.andrespin.notes.utils.sorter.ISorter
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -26,7 +27,10 @@ class NotesViewModel
 @Inject constructor(
     private val provideMainInteractor: Interactor,
     private val provideConverter: DataTypes,
-    private val marker: INotesMarker
+    private val marker: INotesMarker,
+    private val sorter: ISorter,
+    private val regPreference: RegPreference
+
 ) : BaseViewModel() {
 
     val intent = Channel<NotesIntent>(Channel.UNLIMITED)
@@ -40,14 +44,32 @@ class NotesViewModel
 
     private var noteDataList = mutableListOf<NoteData>()
 
-    private var areNotesChecked = false
-
     private fun setStateValue(value: NotesState) {
         _state.value = value
     }
 
     init {
+        checkAuthorization()
         handleIntent()
+    }
+
+    private fun checkAuthorization() {
+        val login = regPreference.getLogin()
+        val password = regPreference.getPassword()
+        if (login != null && password != null) {
+            setStateValue(
+                NotesState.Authorized(
+                    RegData(
+                        login,
+                        password
+                    )
+                )
+            )
+        } else {
+            setStateValue(
+                NotesState.NotAuthorized
+            )
+        }
     }
 
     private fun handleIntent() {
@@ -58,40 +80,94 @@ class NotesViewModel
                     is NotesIntent.ShortItemClickEvent -> shortItemClick(it)
                     is NotesIntent.LongItemClickEvent -> longItemClick(it)
                     is NotesIntent.DeleteCheckedNotes -> deleteCheckedNotes()
+                    is NotesIntent.CancelCheckedNotes -> cancelCheckedNotes()
+                    is NotesIntent.SetSortByNoteSizeInAscendingOrder ->
+                        setSortByNoteSizeInAscendingOrder()
+                    is NotesIntent.SetSortByNoteSizeInDescendingOrder ->
+                        setSortByNoteSizeInDescendingOrder()
+                    is NotesIntent.SetSortByDateInAscendingOrder ->
+                        setSortByDateInAscendingOrder()
+                    is NotesIntent.SetSortByDateInDescendingOrder ->
+                        setSortByDateInDescendingOrder()
                 }
             }
         }
     }
 
-    private suspend fun deleteCheckedNotes() {
-            var notes = mutableListOf<NoteEntity>()
-            coroutineScope {
-                val get = launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
-                    val n = marker.getCheckedNotes(noteDataList)
-                    notes = provideConverter.convertToNoteEntityList(n) as MutableList
-                }
+    private suspend fun setSortByNoteSizeInAscendingOrder() {
+        setStateValue(NotesState.Idle)
+        noteDataList = sorter.setSortByNoteSizeInAscendingOrder(noteDataList)
+        delay(1)
+        setStateValue(NotesState.Notes(noteDataList))
+    }
 
-                val delete = launch(Dispatchers.IO, start = CoroutineStart.LAZY) {
-                    provideMainInteractor.deleteNotes(notes)
-                }
+    private suspend fun setSortByNoteSizeInDescendingOrder() {
+        setStateValue(NotesState.Idle)
+        noteDataList = sorter.setSortByNoteSizeInDescendingOrder(noteDataList)
+        delay(1)
+        setStateValue(NotesState.Notes(noteDataList))
+    }
 
-                val updateAdapter = launch(Dispatchers.IO, start = CoroutineStart.LAZY) {
-                    provideMainInteractor.deleteNotes(notes)
+    private suspend fun setSortByDateInAscendingOrder() {
+        setStateValue(NotesState.Idle)
+        noteDataList = sorter.setSortByDateInAscendingOrder(noteDataList)
+        delay(1)
+        setStateValue(NotesState.Notes(noteDataList))
+    }
 
-                    val n = provideConverter.convertToNoteDataList(provideMainInteractor.getAllNotes())
-                                as MutableList<NoteData>
-                    noteDataList = marker.setBackground(n) as MutableList<NoteData>
-                    setStateValue(
-                        NotesState.Notes(noteDataList)
-                    )
-                }
-                get.start()
-                get.join()
-                delete.start()
-                delete.join()
-                updateAdapter.start()
-                updateAdapter.join()
+    private suspend fun setSortByDateInDescendingOrder() {
+        setStateValue(NotesState.Idle)
+        noteDataList = sorter.setSortByDateInDescendingOrder(noteDataList)
+        delay(1)
+        setStateValue(NotesState.Notes(noteDataList))
+    }
+
+    private suspend fun cancelCheckedNotes() {
+        hideBtn()
+        coroutineScope {
+            launch(Dispatchers.Main) {
+                noteDataList = marker.setAllNotesUnChecked(noteDataList)
+                setStateValue(
+                    NotesState.Idle
+                )
+                delay(1)
+                setStateValue(
+                    NotesState.Notes(noteDataList)
+                )
             }
+        }
+    }
+
+    private suspend fun deleteCheckedNotes() {
+        hideBtn()
+        var notes = mutableListOf<NoteEntity>()
+        coroutineScope {
+            val get = launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
+                val n = marker.getCheckedNotes(noteDataList)
+                notes = provideConverter.convertToNoteEntityList(n) as MutableList
+            }
+
+            val delete = launch(Dispatchers.IO, start = CoroutineStart.LAZY) {
+                provideMainInteractor.deleteNotes(notes)
+            }
+
+            val updateAdapter = launch(Dispatchers.IO, start = CoroutineStart.LAZY) {
+                provideMainInteractor.deleteNotes(notes)
+
+                val n = provideConverter.convertToNoteDataList(provideMainInteractor.getAllNotes())
+                        as MutableList<NoteData>
+                noteDataList = marker.setBackground(n) as MutableList<NoteData>
+                setStateValue(
+                    NotesState.Notes(noteDataList)
+                )
+            }
+            get.start()
+            get.join()
+            delete.start()
+            delete.join()
+            updateAdapter.start()
+            updateAdapter.join()
+        }
     }
 
     private fun longItemClick(it: NotesIntent.LongItemClickEvent) {
@@ -160,7 +236,6 @@ class NotesViewModel
     }
 
     private fun downloadNotes() {
-
         println("downloadNotes")
         viewModelScope.launch {
             val notes = provideMainInteractor.getAllNotes()
