@@ -1,14 +1,4 @@
 # Notes
-Notes
-
-EditText mEdit = (EditText) findViewById(R.id.yourid);
-mEdit.setEnabled(false);
-This is also a viable alternative :
-
-EditText mEdit = (EditText) findViewById(R.id.yourid);
-mEdit.setKeyListener(null);
-
-android:inputType="none"
-
-
-
+<img src="https://github.com/andrespin/Notes/blob/main/notes_1.png" alt="Your image title" width="250"/>
+<img src="https://github.com/andrespin/Notes/blob/main/notes_2.png" alt="Your image title" width="250"/>
+<img src="https://github.com/andrespin/Notes/blob/main/notes_3.png" alt="Your image title" width="250"/>
