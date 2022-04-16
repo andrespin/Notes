@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <ImageView
-        android:id="@+id/imgSortType"
+        android:id="@+id/imgEnterPassword"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"

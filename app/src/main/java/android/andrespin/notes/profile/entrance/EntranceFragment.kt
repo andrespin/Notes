@@ -65,14 +65,7 @@ class EntranceFragment : BaseFragment<FragmentEntranceBinding, EntranceViewModel
                         )
                     )
                 }
-
-
             }
-
-
         }
-
-
     }
-
 }

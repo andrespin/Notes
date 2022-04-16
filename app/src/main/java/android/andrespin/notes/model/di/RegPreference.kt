@@ -34,6 +34,7 @@ class RegPreference @Inject constructor(@ApplicationContext context: Context) {
     fun getPassword() = prefs.getString(password_key, "")
 
     fun removeAllRegData() {
+        println("REMOVE")
         prefs.edit().remove(password_key).apply()
         prefs.edit().remove(login_key).apply()
     }

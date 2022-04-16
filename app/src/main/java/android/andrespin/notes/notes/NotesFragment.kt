@@ -10,6 +10,7 @@ import android.andrespin.notes.notes.adapter.NotesAdapter
 import android.andrespin.notes.notes.intent.NotesEvent
 import android.andrespin.notes.notes.intent.NotesIntent
 import android.andrespin.notes.notes.intent.NotesState
+import android.andrespin.notes.profile.my_profile.intent.ProfileIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
@@ -43,6 +45,10 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
         observeViewModel()
 
         initAdapter()
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.intent.send(NotesIntent.CheckAuthorization)
+        }
 
     }
 
@@ -71,9 +77,7 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
         txtSortType.setOnClickListener {
             showSortMenu(it)
         }
-        imgSortType.setOnClickListener {
-            showSortMenu(it)
-        }
+
     }
 
     private fun showSortMenu(view: View) {

@@ -10,6 +10,7 @@ import android.andrespin.notes.profile.my_profile.intent.ProfileState
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -46,17 +47,16 @@ class EntranceViewModel
         }
     }
 
-    private fun logIn(reg: RegData) {
+    private suspend fun logIn(reg: RegData) {
 
         if (!reg.password.isNullOrBlank() && !reg.login.isNullOrBlank()) {
             regPreference.setPassword(reg.password)
             regPreference.setLogin(reg.login)
+            delay(1)
             setStateValue(EntranceState.LogIn)
         } else {
             setStateValue(EntranceState.Error)
         }
-
-
 
     }
 

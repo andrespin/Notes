@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_back" />
 
     <ImageView
-        android:id="@+id/imgEntrance"
+        android:id="@+id/imgEnterLogin"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="40dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtRegistration" />
 
     <ImageView
-        android:id="@+id/imgEnterPasswordAgain"
+        android:id="@+id/imgRepeatPassword"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="40dp"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgEntrance" />
+        app:layout_constraintTop_toBottomOf="@+id/imgEnterLogin" />
 
 
     <ImageView
@@ -65,7 +65,7 @@
         android:src="@drawable/button_field_dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgEnterPasswordAgain" />
+        app:layout_constraintTop_toBottomOf="@+id/imgRepeatPassword" />
 
     <EditText
         android:id="@+id/editLogin"
@@ -75,10 +75,10 @@
         android:background="@null"
         android:textStyle="bold"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgEntrance"
-        app:layout_constraintEnd_toEndOf="@+id/imgEntrance"
-        app:layout_constraintStart_toStartOf="@+id/imgEntrance"
-        app:layout_constraintTop_toTopOf="@+id/imgEntrance"
+        app:layout_constraintBottom_toBottomOf="@+id/imgEnterLogin"
+        app:layout_constraintEnd_toEndOf="@+id/imgEnterLogin"
+        app:layout_constraintStart_toStartOf="@+id/imgEnterLogin"
+        app:layout_constraintTop_toTopOf="@+id/imgEnterLogin"
         app:layout_constraintVertical_bias="0.487" />
 
     <EditText
@@ -89,13 +89,13 @@
         android:background="@null"
         android:textStyle="bold"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgEnterPasswordAgain"
-        app:layout_constraintEnd_toEndOf="@+id/imgEnterPasswordAgain"
-        app:layout_constraintStart_toStartOf="@+id/imgEnterPasswordAgain"
-        app:layout_constraintTop_toTopOf="@+id/imgEnterPasswordAgain" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgRepeatPassword"
+        app:layout_constraintEnd_toEndOf="@+id/imgRepeatPassword"
+        app:layout_constraintStart_toStartOf="@+id/imgRepeatPassword"
+        app:layout_constraintTop_toTopOf="@+id/imgRepeatPassword" />
 
     <TextView
-        android:id="@+id/editRegister"
+        android:id="@+id/editEnterPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Войти"

@@ -30,6 +30,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     override fun setUpViews() {
         observeViewModel()
 
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.intent.send(ProfileIntent.CheckAuthorization)
+        }
+
     }
 
     private fun observeViewModel() {
@@ -50,6 +54,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
     }
 
     private fun showAuthorizedProfile(data: RegData) {
+        println("showAuthorizedProfile(data: RegData) ${data.login}")
         showAuthorizedContent()
         initAuthorizedContentListeners()
         setAuthorizedContent(data)
@@ -61,20 +66,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private fun initAuthorizedContentListeners() {
         with(viewBinding.authorized) {
+
             imgBackAuthorized.setOnClickListener {
                 lifecycleScope.launch {
-                    coroutineScope {
-                        val send = launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
-                            viewModel.intent.send(ProfileIntent.LogOut)
-                        }
-                        val back = launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
-                            findNavController().popBackStack()
-                        }
-                        send.start()
-                        send.join()
-                        back.start()
-                        back.join()
-                    }
+                    findNavController().popBackStack()
                 }
             }
 
@@ -95,8 +90,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                     viewModel.intent.send(ProfileIntent.LogOut)
                 }
             }
-
-
         }
 
     }
@@ -110,9 +103,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
             }
 
             imgEntrance.setOnClickListener {
+
+
                 findNavController().navigate(R.id.action_profile_to_entrance)
-                println("Click")
+
             }
+
+            imgRegistration.setOnClickListener {
+                findNavController().navigate(R.id.action_profile_to_logging)
+            }
+
         }
     }
 
@@ -125,6 +125,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewBinding.authorized.root.visibility = View.GONE
         viewBinding.notAuthorized.root.visibility = View.VISIBLE
     }
+
+
 
 
 }

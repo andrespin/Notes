@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtAuthorizationMsg" />
 
     <ImageView
-        android:id="@+id/imgSortType"
+        android:id="@+id/imgRegistration"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginLeft="50dp"
@@ -91,9 +91,9 @@
         android:text="Регистрация"
         android:textSize="22sp"
         android:textColor="@color/red_note_txt"
-        app:layout_constraintBottom_toBottomOf="@+id/imgSortType"
-        app:layout_constraintEnd_toEndOf="@+id/imgSortType"
-        app:layout_constraintStart_toStartOf="@+id/imgSortType"
-        app:layout_constraintTop_toTopOf="@+id/imgSortType" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgRegistration"
+        app:layout_constraintEnd_toEndOf="@+id/imgRegistration"
+        app:layout_constraintStart_toStartOf="@+id/imgRegistration"
+        app:layout_constraintTop_toTopOf="@+id/imgRegistration" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

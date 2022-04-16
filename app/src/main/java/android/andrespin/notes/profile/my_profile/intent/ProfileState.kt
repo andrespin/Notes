@@ -12,4 +12,6 @@ sealed class ProfileState {
 
     object ProfileIsNotAuthorized : ProfileState()
 
+
+
 }

@@ -49,14 +49,15 @@ class NotesViewModel
     }
 
     init {
-        checkAuthorization()
         handleIntent()
     }
 
     private fun checkAuthorization() {
         val login = regPreference.getLogin()
         val password = regPreference.getPassword()
-        if (login != null && password != null) {
+        println("checkAuthorization()")
+        println("login $login password $password")
+        if (!login.isNullOrBlank() && !password.isNullOrBlank()) {
             setStateValue(
                 NotesState.Authorized(
                     RegData(
@@ -81,6 +82,7 @@ class NotesViewModel
                     is NotesIntent.LongItemClickEvent -> longItemClick(it)
                     is NotesIntent.DeleteCheckedNotes -> deleteCheckedNotes()
                     is NotesIntent.CancelCheckedNotes -> cancelCheckedNotes()
+                    is NotesIntent.CheckAuthorization -> checkAuthorization()
                     is NotesIntent.SetSortByNoteSizeInAscendingOrder ->
                         setSortByNoteSizeInAscendingOrder()
                     is NotesIntent.SetSortByNoteSizeInDescendingOrder ->

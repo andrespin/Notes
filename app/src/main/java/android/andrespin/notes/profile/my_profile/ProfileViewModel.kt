@@ -35,20 +35,15 @@ class ProfileViewModel
     }
 
     init {
-        initAuthorizationStatus()
-
         handleIntent()
     }
 
-    private fun initAuthorizationStatus() {
+    private suspend fun initAuthorizationStatus() {
+        println("initAuthorizationStatus")
         val reg = regPreference.getRegData()
-        if (reg.login != null && reg.password != null)
-            isAuthorized = true
-
-        viewModelScope.launch(Dispatchers.Main) {
-            sendAuthorisationStatus(reg)
-        }
-
+        isAuthorized = !reg.login.isNullOrBlank() && !reg.password.isNullOrBlank()
+        println("reg $reg")
+        sendAuthorisationStatus(reg)
 
     }
 
@@ -58,6 +53,7 @@ class ProfileViewModel
                 when (it) {
                     is ProfileIntent.TurnSyncingOn -> turnSyncingModeOnInDatabase()
                     is ProfileIntent.TurnSyncingOff -> turnSyncingModeOffInDatabase()
+                    is ProfileIntent.CheckAuthorization -> initAuthorizationStatus()
                     is ProfileIntent.LogOut -> logOut()
                     is ProfileIntent.LogIn -> logIn(it.login, it.pass)
                 }
@@ -70,11 +66,10 @@ class ProfileViewModel
         regPreference.setLogin(login)
     }
 
-    private fun logOut() {
+    private suspend fun logOut() {
         regPreference.removeAllRegData()
-        isAuthorized = true
+        isAuthorized = false
         initAuthorizationStatus()
-
     }
 
     private fun turnSyncingModeOffInDatabase() {
@@ -89,12 +84,14 @@ class ProfileViewModel
 
     private suspend fun sendAuthorisationStatus(regData: RegData) {
         if (isAuthorized) {
+            println("isAuthorized $isAuthorized")
             setStateValue(ProfileState.Idle)
-            delay(1)
+            //   delay(1)
             setStateValue(ProfileState.ProfileIsAuthorized(regData))
         } else {
+            println("isAuthorized $isAuthorized")
             setStateValue(ProfileState.Idle)
-            delay(1)
+            //  delay(1)
             setStateValue(ProfileState.ProfileIsNotAuthorized)
         }
     }

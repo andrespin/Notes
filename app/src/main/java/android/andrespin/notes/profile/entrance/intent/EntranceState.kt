@@ -10,4 +10,6 @@ sealed class EntranceState {
 
     object Error : EntranceState()
 
+
+
 }

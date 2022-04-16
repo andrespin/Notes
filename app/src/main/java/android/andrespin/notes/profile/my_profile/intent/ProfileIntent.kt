@@ -10,6 +10,8 @@ sealed class ProfileIntent {
 
     object LogOut : ProfileIntent()
 
+    object CheckAuthorization : ProfileIntent()
+
     data class LogIn(val login: String, val pass: String) : ProfileIntent()
 
     data class LoggedIn(val reg: RegData) : ProfileIntent()
