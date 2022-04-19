@@ -40,8 +40,22 @@ class EntranceFragment : BaseFragment<FragmentEntranceBinding, EntranceViewModel
                     is EntranceState.Error -> handleError()
                 }
             }
+        }
 
-            viewModel.event.consumeAsFlow().collect {
+        lifecycleScope.launch {
+//            viewModel.event.consumeAsFlow().collect {
+//                when (it) {
+//                    is EntranceEvent.FieldsAreNotFilled ->
+//                        toastMessage("Заполните все пустые поля")
+//                    is EntranceEvent.PassIsNotCorrect ->
+//                        toastMessage("Неверный логин или пароль")
+//                    is EntranceEvent.LoginIsNotFound ->
+//                        toastMessage("Пользователь с таким логином не найден")
+//
+//                }
+//            }
+
+            viewModel.event.collect {
                 when (it) {
                     is EntranceEvent.FieldsAreNotFilled ->
                         toastMessage("Заполните все пустые поля")
@@ -52,9 +66,9 @@ class EntranceFragment : BaseFragment<FragmentEntranceBinding, EntranceViewModel
 
                 }
             }
-
-
         }
+
+
     }
 
     private fun handleError() {

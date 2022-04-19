@@ -21,6 +21,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.flow.SharedFlow
 
 @ObsoleteCoroutinesApi
 @HiltViewModel
@@ -36,8 +37,12 @@ class EntranceViewModel
     val state: StateFlow<EntranceState> get() = _state
 
     // Тут не рабоает
-    private val _event = Channel<EntranceEvent>(Channel.CONFLATED)
-    val event: Channel<EntranceEvent> = _event
+//    private val _event = Channel<EntranceEvent>(Channel.CONFLATED)
+//    val event: Channel<EntranceEvent> = _event
+
+    private val _event = MutableSharedFlow<EntranceEvent>()
+    val event : SharedFlow<EntranceEvent> = _event
+
 
     private fun setStateValue(value: EntranceState) {
         _state.value = value
@@ -62,25 +67,33 @@ class EntranceViewModel
 // Вот тут не работает
         println("click()")
         viewModelScope.launch(Dispatchers.Main) {
-            _event.send(EntranceEvent.FieldsAreNotFilled)
-        }
+            _event.emit(EntranceEvent.FieldsAreNotFilled)
 
+        }
 
     }
 
     private suspend fun logIn(reg: RegData) {
 
+        /*
         _event.send(EntranceEvent.FieldsAreNotFilled)
+
 
         println("logIn $reg")
 
+        setStateValue(EntranceState.Idle)
+        delay(1)
+
         if (reg.login.isNullOrEmpty() || reg.password.isNullOrEmpty()) {
             setStateValue(EntranceState.FieldsAreNotFilled)
-            viewModelScope.launch(Dispatchers.Main) {
-                // _event.send(EntranceEvent.FieldsAreNotFilled)
 
-                println("reg.login.isNullOrEmpty() || reg.password.isNullOrEmpty()")
-            }
+            _event.send(EntranceEvent.FieldsAreNotFilled)
+
+//            viewModelScope.launch(Dispatchers.Main) {
+//                // _event.send(EntranceEvent.FieldsAreNotFilled)
+//
+//                println("reg.login.isNullOrEmpty() || reg.password.isNullOrEmpty()")
+//            }
         } else {
             interactor.getCurrentLogin(reg.login)?.findInBackground { objects, e ->
                 if (e == null) {
@@ -109,6 +122,8 @@ class EntranceViewModel
                 }
             }
         }
+
+        */
     }
 
 
