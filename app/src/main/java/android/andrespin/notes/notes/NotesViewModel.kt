@@ -30,7 +30,6 @@ class NotesViewModel
     private val marker: INotesMarker,
     private val sorter: ISorter,
     private val regPreference: RegPreference
-
 ) : BaseViewModel() {
 
     val intent = Channel<NotesIntent>(Channel.UNLIMITED)
@@ -38,6 +37,7 @@ class NotesViewModel
     private val _state = MutableStateFlow<NotesState>(NotesState.Idle)
     val state: StateFlow<NotesState> get() = _state
 
+    // тут рабоатет
     private val _eventChannel = Channel<NotesEvent>(Channel.CONFLATED)
 
     val event: Channel<NotesEvent> = _eventChannel

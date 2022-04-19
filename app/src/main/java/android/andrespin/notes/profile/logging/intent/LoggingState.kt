@@ -14,4 +14,6 @@ sealed class LoggingState {
 
     object RegDataCorrect : LoggingState()
 
+    object FieldsAreNotFilled : LoggingState()
+
 }

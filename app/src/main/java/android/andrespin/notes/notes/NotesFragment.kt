@@ -11,6 +11,7 @@ import android.andrespin.notes.notes.intent.NotesEvent
 import android.andrespin.notes.notes.intent.NotesIntent
 import android.andrespin.notes.notes.intent.NotesState
 import android.andrespin.notes.profile.my_profile.intent.ProfileIntent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.parse.ParseObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -49,7 +51,6 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.intent.send(NotesIntent.CheckAuthorization)
         }
-
     }
 
     private fun initListeners() = with(viewBinding) {

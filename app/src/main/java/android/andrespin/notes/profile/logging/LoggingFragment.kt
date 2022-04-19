@@ -47,6 +47,8 @@ class LoggingFragment : BaseFragment<FragmentLoggingBinding, LoggingViewModel>()
                     is LoggingState.PassIsNotRepeated -> passIsNotRepeated()
                     is LoggingState.PassIsOk -> passIsOk()
                     is LoggingState.RegDataCorrect -> saveRegData()
+                    is LoggingState.FieldsAreNotFilled ->
+                        toastMessage("Заполните все пустые поля")
                 }
             }
         }

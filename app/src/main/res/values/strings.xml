@@ -4,4 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="test">test</string>
     <string name="AuthorizationMsg">Авторизируйтесь для синхронизации \n своих данных с облаком</string>
+
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+
+    <!-- Paste BOTH strings as required -->
+    <string name="back4app_app_id">FSjTN3WKluWiMx9eZAyzJE1PDQHAFoxypC8fAkD1</string>
+    <string name="back4app_client_key">f48btjG7IrRgZ5jC3F4gugEknmjdLTZp6PzyJDB1</string>
+
 </resources>

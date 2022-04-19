@@ -1,8 +1,11 @@
 package android.andrespin.notes.model.interactor
 
+import android.andrespin.notes.model.RegData
 import android.andrespin.notes.model.database.NoteEntity
 import android.andrespin.notes.model.repository.IRepoLocal
 import android.andrespin.notes.model.repository.IRepoRemote
+import com.parse.ParseObject
+import com.parse.ParseQuery
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,6 +15,11 @@ class MainInteractor
     private val provideRepoLocal: IRepoLocal,
     private val provideRepoRemote: IRepoRemote
 ) : Interactor {
+
+    override fun setRegData(reg: RegData) = provideRepoRemote.setRegData(reg)
+
+    override fun getCurrentLogin(login: String): ParseQuery<ParseObject>? =
+        provideRepoRemote.getDataByLogin(login)
 
     override suspend fun getAllNotes(
         isAuthorized: Boolean,

@@ -7,7 +7,6 @@ plugins {
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-
 android {
     compileSdk 32
 
@@ -89,5 +88,10 @@ dependencies {
 
     //
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
+
+    // back4app as server side
+   // implementation "com.github.parse-community.Parse-SDK-Android:parse:1.26.0"
+
+    implementation 'com.github.parse-community.Parse-SDK-Android:parse:3.0.0'
 
 }

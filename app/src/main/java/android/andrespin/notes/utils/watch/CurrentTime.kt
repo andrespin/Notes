@@ -18,6 +18,7 @@ class CurrentTime(
         scope
             .launch {
                 while (isActive) {
+                  //  mutableTimeAndDate.value
                     mutableTimeAndDate.value = getCurrentTimeAndDate()
                 //    println("getCurrentTimeAndDate() ${getCurrentTimeAndDate()}")
                     delay(20)
