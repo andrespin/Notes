@@ -26,6 +26,8 @@ class NoteFragment : BaseFragment<FragmentNoteBinding, NoteViewModel>() {
 
     private var id: Int? = 0
 
+    private var textChangedCount = 0
+
     private var isNoteEdited = false
 
     override val viewModelClass: Class<NoteViewModel>
@@ -92,7 +94,12 @@ class NoteFragment : BaseFragment<FragmentNoteBinding, NoteViewModel>() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                isNoteEdited = true
+
+                if (textChangedCount > 1) {
+                    println("onTextChanged")
+                    isNoteEdited = true
+                }
+                textChangedCount++
                 val text = s.toString()
                 lifecycleScope.launch {
                     viewModel.intent.send(NoteIntent.SendBody(text))
@@ -104,26 +111,31 @@ class NoteFragment : BaseFragment<FragmentNoteBinding, NoteViewModel>() {
 
         viewBinding.editTextHeader.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
+                println("afterTextChanged")
             }
 
             override fun beforeTextChanged(
                 s: CharSequence, start: Int,
                 count: Int, after: Int
             ) {
+                println("beforeTextChanged")
             }
 
             override fun onTextChanged(
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                isNoteEdited = true
+                if (textChangedCount > 1) {
+                    println("onTextChanged")
+                    isNoteEdited = true
+                }
+                textChangedCount++
                 val text = s.toString()
                 lifecycleScope.launch {
                     viewModel.intent.send(NoteIntent.SendHeader(text))
                 }
             }
         })
-
 
     private fun observeViewModel() {
         lifecycleScope.launch {

@@ -2,6 +2,7 @@ package android.andrespin.notes.model.repository
 
 import android.andrespin.notes.model.database.NoteDao
 import android.andrespin.notes.model.database.NoteEntity
+import android.database.sqlite.SQLiteConstraintException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,7 +30,12 @@ class RepoLocal
 
     override suspend fun insertNoteList(noteListEntity: List<NoteEntity>) {
         for (element in noteListEntity) {
-            provideNoteDao.insertNote(element)
+            try {
+                provideNoteDao.insertNote(element)
+            } catch (e: SQLiteConstraintException) {
+                provideNoteDao.updateNote(element)
+                e.printStackTrace()
+            }
         }
     }
 

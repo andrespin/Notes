@@ -34,7 +34,8 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgAva" />
+        app:layout_constraintTop_toBottomOf="@+id/imgAva"
+        tools:text="andrespin" />
 
     <TextView
         android:id="@+id/txtSyncDataInCloudAuthorized"
@@ -55,7 +56,7 @@
         android:layout_marginStart="36dp"
         android:layout_marginTop="128dp"
         app:layout_constraintStart_toEndOf="@+id/txtSyncDataInCloudAuthorized"
-        app:layout_constraintTop_toBottomOf="@+id/txtLoginAuthorized" >
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginAuthorized">
 
     </Switch>
 
@@ -75,8 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textColor="#DDFF0000"
         android:text="Синхронизируйте свои данные \n с облаком"
+        android:textColor="#DDFF0000"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/txtSyncDataInCloudAuthorized"
         app:layout_constraintTop_toBottomOf="@+id/txtSyncDataInCloudAuthorized" />
@@ -102,6 +103,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgLogOut" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_round"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/txtSyncDataInCloudAuthorized"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginAuthorized" />
+
+    <ImageView
+        android:id="@+id/imgSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/txtSyncDataInCloudAuthorized"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginAuthorized"
+        app:srcCompat="@drawable/ic_check_mark_green" />
+
+    <ImageView
+        android:id="@+id/imgError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/txtSyncDataInCloudAuthorized"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLoginAuthorized"
+        app:srcCompat="@drawable/ic_red_exclamation_mark" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

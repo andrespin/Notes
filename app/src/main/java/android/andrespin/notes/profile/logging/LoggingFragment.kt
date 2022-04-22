@@ -84,7 +84,6 @@ class LoggingFragment : BaseFragment<FragmentLoggingBinding, LoggingViewModel>()
 
     }
 
-
     private fun initListeners() = with(viewBinding) {
         imgBack.setOnClickListener {
             findNavController().popBackStack()

@@ -6,6 +6,7 @@ import android.andrespin.notes.model.Time
 import android.andrespin.notes.model.database.NoteEntity
 import android.andrespin.notes.utils.sorter.ISorter
 import android.andrespin.notes.utils.sorter.Sorter
+import android.andrespin.notes.utils.sorter.SorterNotes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -20,7 +21,6 @@ class SorterUnitTest {
     private val time2 = Time("12", "44", "12")
 
     private val time3 = Time("13", "14", "12")
-
 
     private val date = Date("13", "04", "2022")
 
@@ -126,5 +126,70 @@ class SorterUnitTest {
             notesDataAscending,
             sorter.setSortByDateInDescendingOrder(notesDataDescending as MutableList<NoteData>)
         )
+
+        //  sorter.sortNotesForSyncing()
     }
+
+    val db = listOf(
+        NoteEntity(
+            1,
+            "Zagolovok",
+            body = "Sinhronizaciya",
+            "17",
+            "15",
+            "21",
+            "20",
+            "04",
+            "2022"
+        )
+    )
+
+    val server = listOf(
+        NoteEntity(
+            1,
+            "Zagolovok",
+            body = "Sinhronizaciya",
+            "17",
+            "15",
+            "21",
+            "20",
+            "04",
+            "2022"
+        ),
+        NoteEntity(
+            2,
+            "Zagolovok",
+            body = "Sinhronizaciya",
+            "17",
+            "15",
+            "21",
+            "20",
+            "04",
+            "2022"
+        )
+    )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun sortNotesForSyncing_isCorrect() = runTest {
+        Assert.assertEquals(
+            SorterNotes(
+                mutableListOf(
+                    NoteEntity(
+                        2,
+                        "Zagolovok",
+                        body = "Sinhronizaciya",
+                        "17",
+                        "15",
+                        "21",
+                        "20",
+                        "04",
+                        "2022"
+                    )
+                ), mutableListOf()
+            ),
+            sorter.sortNotesForSyncing(db, server)
+        )
+    }
+
 }

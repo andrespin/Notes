@@ -1,9 +1,6 @@
 package android.andrespin.notes.model.di
 
-import android.andrespin.notes.model.RegData
-import android.andrespin.notes.model.login_key
-import android.andrespin.notes.model.password_key
-import android.andrespin.notes.model.reg_preferences
+import android.andrespin.notes.model.*
 import android.content.Context
 import android.preference.PreferenceManager
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,7 +18,7 @@ class RegPreference @Inject constructor(@ApplicationContext context: Context) {
 
     fun getLogin() = prefs.getString(login_key, "")
 
-    fun getRegData() : RegData =
+    fun getRegData(): RegData =
         RegData(
             getLogin(),
             getPassword()
@@ -30,6 +27,12 @@ class RegPreference @Inject constructor(@ApplicationContext context: Context) {
     fun setPassword(query: String) {
         prefs.edit().putString(password_key, query).apply()
     }
+
+    fun setSyncingState(isSyncingAllowed: Boolean) {
+        prefs.edit().putBoolean(syncingState, isSyncingAllowed).apply()
+    }
+
+    fun getSyncingState() = prefs.getBoolean(syncingState, true)
 
     fun getPassword() = prefs.getString(password_key, "")
 

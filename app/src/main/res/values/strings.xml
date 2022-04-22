@@ -10,5 +10,6 @@
     <!-- Paste BOTH strings as required -->
     <string name="back4app_app_id">FSjTN3WKluWiMx9eZAyzJE1PDQHAFoxypC8fAkD1</string>
     <string name="back4app_client_key">f48btjG7IrRgZ5jC3F4gugEknmjdLTZp6PzyJDB1</string>
+    <string name="fill_all_empty_fields">Заполните все пустые поля</string>
 
 </resources>

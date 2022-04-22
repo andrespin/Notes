@@ -152,6 +152,7 @@ class NoteViewModel
         }
 
     private fun saveNote(noteIntent: NoteIntent.SaveNote) {
+        println("noteIntent.isNoteEdited ${noteIntent.isNoteEdited}")
         if (noteIntent.isNoteEdited) {
             if (header != "" || body != "") {
                 if (noteIntent.id == 0 || noteIntent.id == null) {

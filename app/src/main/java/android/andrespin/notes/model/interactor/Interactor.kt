@@ -4,6 +4,8 @@ import android.andrespin.notes.model.RegData
 import android.andrespin.notes.model.database.NoteEntity
 import com.parse.ParseObject
 import com.parse.ParseQuery
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 
 interface Interactor {
 
@@ -17,10 +19,47 @@ interface Interactor {
 
     fun getCurrentLogin(login: String): ParseQuery<ParseObject>?
 
+
+    suspend fun syncNotes(
+        isSyncingOn: Boolean,
+        login: String,
+        scope: CoroutineScope?
+    ): Flow<SyncState>
+
+    suspend fun synchronizeNotes(
+        isSyncingOn: Boolean,
+        login: String,
+        scope: CoroutineScope?
+    ): Flow<SyncState>
+
+
     suspend fun getAllNotes(
-        isAuthorized: Boolean = false,
-        isConnected: Boolean = false
+
     ): List<NoteEntity>
+
+    suspend fun getAllNotes(
+        login: String
+    ): ParseQuery<ParseObject>?
+
+    suspend fun saveNotes(
+        notes: List<NoteEntity>
+    )
+
+    suspend fun saveNotes(
+        notes: List<NoteEntity>,
+        login: String
+    )
+
+    /**
+     * Сохраняет записи пользователя, которые есть на сервере,
+     * но которых нет в базе данных и наоборот
+     */
+
+    suspend fun saveMissingNotes(
+        missingNotesDb: List<NoteEntity>,
+        missingNotesServer: List<NoteEntity>,
+        login: String
+    )
 
     suspend fun saveNote(
         noteEntity: NoteEntity,

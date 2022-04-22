@@ -1,10 +1,8 @@
 package android.andrespin.notes.utils.converter
 
-import android.andrespin.notes.model.Date
-import android.andrespin.notes.model.NoteData
-import android.andrespin.notes.model.Time
+import android.andrespin.notes.model.*
 import android.andrespin.notes.model.database.NoteEntity
-import android.andrespin.notes.model.mapRussianMonths
+import com.parse.ParseObject
 
 class Converter : TimeAndDate, DataTypes {
 
@@ -144,6 +142,67 @@ class Converter : TimeAndDate, DataTypes {
             noteData.date.m,
             noteData.date.y
         )
+
+    override fun convertParseObjectToNoteEntityList(objects: List<ParseObject>): List<NoteEntity> {
+        val list = mutableListOf<NoteEntity>()
+
+        for (i in 0 until objects.size) {
+
+            val id = objects[i].getString(server_note_id)?.toInt() // Мб стоит throw exception
+
+            val header = objects[i].getString(server_note_header)
+
+            val body = objects[i].getString(server_note_body)
+
+            val timeHours = objects[i].getString(server_note_time_hours)
+
+            val timeMinutes = objects[i].getString(server_note_time_minutes)
+
+            val timeSeconds = objects[i].getString(server_note_time_seconds)
+
+            val dateDay = objects[i].getString(server_note_date_day)
+
+            val dateMonth = objects[i].getString(server_note_date_month)
+
+            val dateYear = objects[i].getString(server_note_date_year)
+
+            list.add(
+                NoteEntity(
+                    id!!,
+                    header!!,
+                    body!!,
+                    timeHours!!,
+                    timeMinutes!!,
+                    timeSeconds!!,
+                    dateDay!!,
+                    dateMonth!!,
+                    dateYear!!
+                )
+            )
+        }
+        return list
+    }
+
+    /*
+            note.put(server_note_id, noteEntity.id)
+
+        note.put(server_note_header, noteEntity.header)
+
+        note.put(server_note_body, noteEntity.body)
+
+        note.put(server_note_time_hours, noteEntity.timeHours)
+
+        note.put(server_note_time_minutes, noteEntity.timeMinutes)
+
+        note.put(server_note_time_seconds, noteEntity.timeSeconds)
+
+        note.put(server_note_date_day, noteEntity.dateDay)
+
+        note.put(server_note_date_month, noteEntity.dateMonth)
+
+        note.put(server_note_date_year, noteEntity.dateYear)
+     */
+
 
     private fun getTime(
         timeHours: String,

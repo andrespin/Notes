@@ -6,6 +6,4 @@ sealed class EntranceIntent {
 
     data class LogIn(val reg: RegData) : EntranceIntent()
 
-    object Click : EntranceIntent()
-
 }

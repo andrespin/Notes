@@ -2,7 +2,6 @@ package android.andrespin.notes.model
 
 import android.andrespin.notes.R
 
-
 const val login_key = "LOGIN_KEY"
 
 const val password_key = "PASSWORD_KEY"
@@ -12,6 +11,8 @@ const val login_server = "Login"
 const val pass_server = "Password"
 
 const val reg_preferences = "REGISTRATION_PREFERENCES"
+
+const val syncingState = "Syncing status"
 
 const val dateFormat = "yyyy.MM.dd '-' HH:mm:ss"
 
@@ -24,6 +25,26 @@ const val backNoteRed = R.drawable.back_note_red
 const val backNoteYellow = R.drawable.back_note_yellow
 
 const val backNoteGreen = R.drawable.back_note_green
+
+const val server_note_login = "login"
+
+const val server_note_id = "note_id"
+
+const val server_note_header = "header"
+
+const val server_note_body = "body"
+
+const val server_note_time_hours = "timeHours"
+
+const val server_note_time_minutes = "timeMinutes"
+
+const val server_note_time_seconds = "timeSeconds"
+
+const val server_note_date_day = "dateDay"
+
+const val server_note_date_month = "dateMonth"
+
+const val server_note_date_year = "dateYear"
 
 val colorList = listOf(
     backNoteBlue, backNoteRed, backNoteYellow, backNoteGreen
@@ -40,7 +61,6 @@ const val backNoteCheckedGreen = R.drawable.back_note_checked_green
 val colorCheckedList = listOf(
     backNoteCheckedBlue, backNoteCheckedRed, backNoteCheckedYellow, backNoteCheckedGreen
 )
-
 
 val mapRussianMonths = mapOf(
     1 to "Января",

@@ -14,6 +14,4 @@ sealed class NotesState : State {
 
     data class Authorized(val regData: RegData) : NotesState()
 
-    data class OpenNote(val id: Int) : NotesState()
-
 }

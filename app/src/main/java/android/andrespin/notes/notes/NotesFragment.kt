@@ -3,9 +3,7 @@ package android.andrespin.notes.notes
 import android.andrespin.notes.BaseFragment
 import android.andrespin.notes.R
 import android.andrespin.notes.databinding.FragmentNotesBinding
-import android.andrespin.notes.model.NoteData
-import android.andrespin.notes.model.RegData
-import android.andrespin.notes.model.noteId
+import android.andrespin.notes.model.*
 import android.andrespin.notes.notes.adapter.NotesAdapter
 import android.andrespin.notes.notes.intent.NotesEvent
 import android.andrespin.notes.notes.intent.NotesIntent
@@ -21,6 +19,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.parse.ParseObject
+import com.parse.ParseQuery
+import com.parse.livequery.ParseLiveQueryClient
+import com.parse.livequery.SubscriptionHandling
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -78,6 +79,19 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
         txtSortType.setOnClickListener {
             showSortMenu(it)
         }
+
+        rvNotesSwipeRefreshLayout.setOnRefreshListener {
+            lifecycleScope.launch {
+                viewModel.intent.send(NotesIntent.SynchronizeNotes)
+            }
+
+        }
+
+//        rvNotesSwipeRefreshLayout.setOnRefreshListener {
+//
+//            rvNotesSwipeRefreshLayout.isRefreshing = false
+//        }
+
 
     }
 
@@ -142,22 +156,38 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
                     is NotesEvent.SetNoteListWithNewVars -> setNotesToAdapter(it.list)
                     is NotesEvent.ShowButtons -> showButtons()
                     is NotesEvent.HideButtons -> hideButtons()
+                    is NotesEvent.NotesFromServer -> setNotesFromServerToAdapter(it)
+                    is NotesEvent.Error -> toastMessage("Ошибка")
                 }
             }
         }
 
     }
 
+    private fun setNotesFromServerToAdapter(it: NotesEvent.NotesFromServer) {
+
+        if (it.isSynchronized && !it.list.isNullOrEmpty()) {
+            adapter.setData(it.list)
+            toastMessage("Синхронизировано успешно")
+        } else {
+            toastMessage("Нет ответа от сервера")
+        }
+
+        viewBinding.rvNotesSwipeRefreshLayout.isRefreshing = false
+    }
+
     private fun setNotAuthorizedProfile() = with(viewBinding) {
         println("setNotAuthorizedProfile()")
         txtLogin.text = ""
         imgRedRound.visibility = View.VISIBLE
+        rvNotesSwipeRefreshLayout.isEnabled = false
     }
 
     private fun setAuthorizedProfile(regData: RegData) = with(viewBinding) {
         println("setAuthorizedProfile()")
         txtLogin.text = regData.login
         imgRedRound.visibility = View.GONE
+        rvNotesSwipeRefreshLayout.isEnabled = true
     }
 
     private fun hideButtons() = with(viewBinding) {
@@ -182,6 +212,66 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
     private fun setNotesToAdapter(list: List<NoteData>) {
         adapter.setData(list)
     }
+
+
+    private fun live() {
+
+        viewBinding.imgChangeShowOrder.setOnClickListener {
+
+            val regData = ParseObject("Test")
+            regData.put("testId", 12)
+            regData.put("header", "test")
+            regData.saveInBackground {
+                if (it != null) {
+                    it.localizedMessage?.let { message -> Log.e("Server error", message) }
+                } else {
+                    Log.d("Server", "Object saved.")
+                }
+            }
+
+        }
+
+        val parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient()
+
+        val parseQuery = ParseQuery<ParseObject>("Test")
+
+        val subscriptionHandling = parseLiveQueryClient!!.subscribe(parseQuery)
+
+
+        subscriptionHandling!!.handleSubscribe {
+            subscriptionHandling!!.handleEvent(
+                SubscriptionHandling.Event.CREATE
+            ) { _: ParseQuery<ParseObject?>?, obj: ParseObject? ->
+                println("add ${obj?.getNumber("testId")}")
+                println("add ${obj?.getString("header")}")
+
+                //  runOnUiThread { messagesAdapter!!.addItem(`object`) }
+            }
+
+
+            subscriptionHandling!!.handleEvent(
+                SubscriptionHandling.Event.DELETE
+            ) { _: ParseQuery<ParseObject?>?, obj: ParseObject? ->
+
+                println("delete ${obj?.getNumber("id")}")
+                println("delete ${obj?.getString("header")}")
+
+                //  runOnUiThread { messagesAdapter!!.removeItem(`object`!!) }
+            }
+            subscriptionHandling!!.handleEvent(
+                SubscriptionHandling.Event.UPDATE
+            ) { _: ParseQuery<ParseObject?>?, obj: ParseObject? ->
+
+                println("update ${obj?.getNumber("id")}")
+                println("update ${obj?.getString("header")}")
+
+                //  runOnUiThread { messagesAdapter!!.updateItem(`object`!!) }
+            }
+        }
+
+
+    }
+
 
 }
 

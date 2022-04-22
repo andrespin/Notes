@@ -6,15 +6,21 @@ import android.andrespin.notes.model.RegData
 import android.andrespin.notes.model.database.NoteEntity
 import android.andrespin.notes.model.di.RegPreference
 import android.andrespin.notes.model.interactor.Interactor
+import android.andrespin.notes.model.interactor.MainInteractor
 import android.andrespin.notes.model.login_key
 import android.andrespin.notes.model.password_key
 import android.andrespin.notes.notes.intent.NotesEvent
 import android.andrespin.notes.notes.intent.NotesIntent
 import android.andrespin.notes.notes.intent.NotesState
+import android.andrespin.notes.profile.my_profile.intent.ProfileState
 import android.andrespin.notes.utils.converter.DataTypes
 import android.andrespin.notes.utils.marker.INotesMarker
 import android.andrespin.notes.utils.sorter.ISorter
 import androidx.lifecycle.viewModelScope
+import com.parse.ParseObject
+import com.parse.ParseQuery
+import com.parse.livequery.ParseLiveQueryClient
+import com.parse.livequery.SubscriptionHandling
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -57,6 +63,10 @@ class NotesViewModel
         val password = regPreference.getPassword()
         println("checkAuthorization()")
         println("login $login password $password")
+        setAuthorizationStatus(login, password)
+    }
+
+    private fun setAuthorizationStatus(login: String?, password: String?) {
         if (!login.isNullOrBlank() && !password.isNullOrBlank()) {
             setStateValue(
                 NotesState.Authorized(
@@ -66,10 +76,12 @@ class NotesViewModel
                     )
                 )
             )
+
         } else {
             setStateValue(
                 NotesState.NotAuthorized
             )
+
         }
     }
 
@@ -83,6 +95,7 @@ class NotesViewModel
                     is NotesIntent.DeleteCheckedNotes -> deleteCheckedNotes()
                     is NotesIntent.CancelCheckedNotes -> cancelCheckedNotes()
                     is NotesIntent.CheckAuthorization -> checkAuthorization()
+                    is NotesIntent.SynchronizeNotes -> synchronizeNotes()
                     is NotesIntent.SetSortByNoteSizeInAscendingOrder ->
                         setSortByNoteSizeInAscendingOrder()
                     is NotesIntent.SetSortByNoteSizeInDescendingOrder ->
@@ -95,6 +108,50 @@ class NotesViewModel
             }
         }
     }
+
+    private suspend fun synchronizeNotes() {
+        syncDataWithServer()
+    }
+
+    private suspend fun syncDataWithServer() {
+
+        val reg = regPreference.getRegData()
+
+        if (reg.login != null)
+            provideMainInteractor.getAllNotes(reg.login)
+                ?.findInBackground { objects, e ->
+                    if (e == null) {
+                        val server = provideConverter.convertParseObjectToNoteEntityList(objects)
+
+                        viewModelScope.launch {
+
+                            val db = provideMainInteractor.getAllNotes()
+                            val sorted = sorter.sortNotesForSyncing(db, server)
+
+                            provideMainInteractor.saveMissingNotes(
+                                sorted.missingNotesDb,
+                                sorted.missingNotesServer,
+                                reg.login
+                            )
+
+                            val converted =
+                                provideConverter.convertToNoteDataList(provideMainInteractor.getAllNotes())
+
+                            val marked = marker.setBackground(converted)
+
+                            _eventChannel.send(NotesEvent.NotesFromServer(marked, true))
+                        }
+                    } else {
+
+                        viewModelScope.launch {
+                            _eventChannel.send(NotesEvent.Error)
+                        }
+                        e.printStackTrace()
+                    }
+                }
+
+    }
+
 
     private suspend fun setSortByNoteSizeInAscendingOrder() {
         setStateValue(NotesState.Idle)
@@ -243,7 +300,6 @@ class NotesViewModel
             val notes = provideMainInteractor.getAllNotes()
             val convertToNoteData = provideConverter.convertToNoteDataList(notes)
             noteDataList = marker.setBackground(convertToNoteData) as MutableList<NoteData>
-            println("downloadNotes last ${noteDataList[noteDataList.lastIndex]}")
             setStateValue(
                 NotesState.Notes(noteDataList)
             )

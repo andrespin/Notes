@@ -33,7 +33,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.intent.send(ProfileIntent.CheckAuthorization)
         }
-
     }
 
     private fun observeViewModel() {
@@ -42,9 +41,37 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
                 when (it) {
                     is ProfileState.ProfileIsAuthorized -> showAuthorizedProfile(it.data)
                     is ProfileState.ProfileIsNotAuthorized -> showNotAuthorizedProfile()
+                    is ProfileState.SyncOff -> hideSyncStatus()
+                    is ProfileState.Loading -> showLoading()
+                    is ProfileState.Success -> showSuccess()
+                    is ProfileState.Error -> showError()
                 }
             }
         }
+    }
+
+    private fun hideSyncStatus() = with(viewBinding.authorized) {
+        imgError.visibility = View.GONE
+        imgSuccess.visibility = View.GONE
+        progressBarRound.visibility = View.GONE
+    }
+
+    private fun showError() = with(viewBinding.authorized) {
+        imgError.visibility = View.VISIBLE
+        imgSuccess.visibility = View.GONE
+        progressBarRound.visibility = View.GONE
+    }
+
+    private fun showSuccess() = with(viewBinding.authorized) {
+        imgError.visibility = View.GONE
+        imgSuccess.visibility = View.VISIBLE
+        progressBarRound.visibility = View.GONE
+    }
+
+    private fun showLoading() = with(viewBinding.authorized) {
+        imgError.visibility = View.GONE
+        imgSuccess.visibility = View.GONE
+        progressBarRound.visibility = View.VISIBLE
     }
 
     private fun showNotAuthorizedProfile() {
@@ -125,8 +152,5 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         viewBinding.authorized.root.visibility = View.GONE
         viewBinding.notAuthorized.root.visibility = View.VISIBLE
     }
-
-
-
 
 }

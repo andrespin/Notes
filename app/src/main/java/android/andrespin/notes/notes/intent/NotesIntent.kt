@@ -22,6 +22,8 @@ sealed class NotesIntent {
 
     object CheckAuthorization : NotesIntent()
 
+    object SynchronizeNotes : NotesIntent()
+
     data class LongItemClickEvent(val id: Int, val position: Int) : NotesIntent()
 
     data class ShortItemClickEvent(val id: Int, val position: Int) : NotesIntent()

@@ -3,11 +3,15 @@ package android.andrespin.notes.profile.my_profile
 import android.andrespin.notes.BaseViewModel
 import android.andrespin.notes.model.RegData
 import android.andrespin.notes.model.di.RegPreference
+import android.andrespin.notes.model.interactor.Interactor
+import android.andrespin.notes.model.interactor.SyncState
+import android.andrespin.notes.profile.logging.intent.LoggingState
 import android.andrespin.notes.profile.my_profile.intent.ProfileIntent
 import android.andrespin.notes.profile.my_profile.intent.ProfileState
+import android.andrespin.notes.utils.converter.DataTypes
+import android.andrespin.notes.utils.sorter.ISorter
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +24,10 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel
 @Inject constructor(
-    private val regPreference: RegPreference
+    private val regPreference: RegPreference,
+    private val interactor: Interactor,
+    private val converter: DataTypes,
+    private val sorter: ISorter
 ) : BaseViewModel() {
 
     private var isAuthorized: Boolean = false
@@ -72,14 +79,61 @@ class ProfileViewModel
         initAuthorizationStatus()
     }
 
-    private fun turnSyncingModeOffInDatabase() {
-        println("On")
-        TODO("add false to db")
+    private suspend fun turnSyncingModeOffInDatabase() {
+        setStateValue(ProfileState.Idle)
+        delay(1)
+        setStateValue(ProfileState.SyncOff)
+        println("Off")
+        regPreference.setSyncingState(false)
     }
 
-    private fun turnSyncingModeOnInDatabase() {
-        println("Off")
-        TODO("add true to db")
+    private suspend fun turnSyncingModeOnInDatabase() {
+        println("On")
+        regPreference.setSyncingState(true)
+        syncDataWithServer()
+    }
+
+    private suspend fun syncDataWithServer() {
+
+        // setStateValue(ProfileState.Idle)
+
+        setStateValue(ProfileState.Loading)
+
+        val state = regPreference.getSyncingState()
+        val reg = regPreference.getRegData()
+
+        if (reg.login != null)
+            interactor.getAllNotes(reg.login)
+                ?.findInBackground { objects, e ->
+                    if (e == null) {
+                        val server = converter.convertParseObjectToNoteEntityList(objects)
+
+                        viewModelScope.launch {
+
+                            val db = interactor.getAllNotes()
+                            val sorted = sorter.sortNotesForSyncing(db, server)
+
+                            interactor.saveMissingNotes(
+                                sorted.missingNotesDb,
+                                sorted.missingNotesServer,
+                                reg.login
+                            )
+                            setStateValue(ProfileState.Success)
+                        }
+                    } else {
+                        setStateValue(ProfileState.Error)
+                        e.printStackTrace()
+                    }
+                }
+
+    }
+
+    private fun errorState(it: SyncState.Error) {
+        println("SyncState.Error ${it.error}")
+    }
+
+    private fun successState(it: SyncState.Success) {
+        println("SyncState.Success ${it.notesFromServer}")
     }
 
     private suspend fun sendAuthorisationStatus(regData: RegData) {

@@ -1,6 +1,7 @@
 package android.andrespin.notes.profile.entrance
 
 import android.andrespin.notes.BaseFragment
+import android.andrespin.notes.R
 import android.andrespin.notes.databinding.FragmentEntranceBinding
 import android.andrespin.notes.databinding.FragmentNotesBinding
 import android.andrespin.notes.model.RegData
@@ -15,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,6 +31,9 @@ class EntranceFragment : BaseFragment<FragmentEntranceBinding, EntranceViewModel
     }
 
     private fun observeViewModel() {
+
+       // getResources().getString()
+
         lifecycleScope.launch {
             viewModel.state.collect {
                 when (it) {
@@ -43,22 +46,10 @@ class EntranceFragment : BaseFragment<FragmentEntranceBinding, EntranceViewModel
         }
 
         lifecycleScope.launch {
-//            viewModel.event.consumeAsFlow().collect {
-//                when (it) {
-//                    is EntranceEvent.FieldsAreNotFilled ->
-//                        toastMessage("Заполните все пустые поля")
-//                    is EntranceEvent.PassIsNotCorrect ->
-//                        toastMessage("Неверный логин или пароль")
-//                    is EntranceEvent.LoginIsNotFound ->
-//                        toastMessage("Пользователь с таким логином не найден")
-//
-//                }
-//            }
-
             viewModel.event.collect {
                 when (it) {
                     is EntranceEvent.FieldsAreNotFilled ->
-                        toastMessage("Заполните все пустые поля")
+                        toastMessage(getString(R.string.fill_all_empty_fields))
                     is EntranceEvent.PassIsNotCorrect ->
                         toastMessage("Неверный логин или пароль")
                     is EntranceEvent.LoginIsNotFound ->
@@ -88,16 +79,16 @@ class EntranceFragment : BaseFragment<FragmentEntranceBinding, EntranceViewModel
 
             imgEnter.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.Main) {
-                    viewModel.intent.send(EntranceIntent.Click)
+//                    viewModel.intent.send(EntranceIntent.Click)
 
-//                    viewModel.intent.send(
-//                        EntranceIntent.LogIn(
-//                            RegData(
-//                                editLogin.text.toString(),
-//                                editPassword.text.toString()
-//                            )
-//                        )
-//                    )
+                    viewModel.intent.send(
+                        EntranceIntent.LogIn(
+                            RegData(
+                                editLogin.text.toString(),
+                                editPassword.text.toString()
+                            )
+                        )
+                    )
                 }
             }
         }
