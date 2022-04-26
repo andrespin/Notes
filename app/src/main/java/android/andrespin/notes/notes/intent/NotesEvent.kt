@@ -10,6 +10,10 @@ sealed class NotesEvent {
 
     object Error : NotesEvent()
 
+    object SwipeRefreshOn : NotesEvent()
+
+    object SwipeRefreshOff : NotesEvent()
+
     data class NotesFromServer(val list: List<NoteData>, val isSynchronized: Boolean) : NotesEvent()
 
     data class OpenNote(val id: Int) : NotesEvent()

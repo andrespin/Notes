@@ -5,7 +5,11 @@ import android.andrespin.notes.model.RegData
 import android.andrespin.notes.model.di.RegPreference
 import android.andrespin.notes.model.interactor.Interactor
 import android.andrespin.notes.model.interactor.SyncState
+import android.andrespin.notes.model.syncingResultSuccess
+import android.andrespin.notes.notes.intent.NotesEvent
+import android.andrespin.notes.notes.intent.NotesState
 import android.andrespin.notes.profile.logging.intent.LoggingState
+import android.andrespin.notes.profile.my_profile.intent.ProfileEvent
 import android.andrespin.notes.profile.my_profile.intent.ProfileIntent
 import android.andrespin.notes.profile.my_profile.intent.ProfileState
 import android.andrespin.notes.utils.converter.DataTypes
@@ -14,10 +18,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,6 +37,11 @@ class ProfileViewModel
 
     private val _state = MutableStateFlow<ProfileState>(ProfileState.Idle)
     val state: StateFlow<ProfileState> get() = _state
+
+    private val _event = MutableSharedFlow<ProfileEvent>()
+
+    val event: SharedFlow<ProfileEvent> = _event
+
 
     private fun setStateValue(value: ProfileState) {
         _state.value = value
@@ -142,6 +148,7 @@ class ProfileViewModel
             setStateValue(ProfileState.Idle)
             //   delay(1)
             setStateValue(ProfileState.ProfileIsAuthorized(regData))
+            sendSyncEnability()
         } else {
             println("isAuthorized $isAuthorized")
             setStateValue(ProfileState.Idle)
@@ -149,5 +156,17 @@ class ProfileViewModel
             setStateValue(ProfileState.ProfileIsNotAuthorized)
         }
     }
+
+    private fun sendSyncEnability() = viewModelScope.launch {
+        if (regPreference.getSyncingState())
+            if (regPreference.getSyncingResult() == syncingResultSuccess) {
+                _event.emit(ProfileEvent.SyncOnSuccess)
+            } else {
+                _event.emit(ProfileEvent.SyncOnError)
+            }
+        else
+            _event.emit(ProfileEvent.SyncOff)
+    }
+
 
 }

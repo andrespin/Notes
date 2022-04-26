@@ -24,41 +24,7 @@ class NotesAdapter(
 
     private var data: List<NoteData> = mutableListOf()
 
-
-//    fun addItem(t: ParseObject?) {
-//        list!!.add(t!!)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun removeItem(`object`: ParseObject) {
-//        for (i in list!!.indices) {
-//            if (list!![i].objectId == `object`.objectId) {
-//                list!!.removeAt(i)
-//                notifyItemRemoved(i)
-//                notifyItemRangeChanged(i, list!!.size)
-//                return
-//            }
-//        }
-//    }
-//
-//    fun updateItem(`object`: ParseObject) {
-//        for (i in list!!.indices) {
-//            if (list!![i].objectId == `object`.objectId) {
-//                list!![i] = `object`
-//                notifyDataSetChanged()
-//                return
-//            }
-//        }
-//    }
-
-
     fun setData(data: List<NoteData>) {
-        println("Data is set")
-        this.data = data
-        notifyDataSetChanged()
-    }
-
-    fun setData(data: List<NoteData>, vb: ViewBinding) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -70,8 +36,7 @@ class NotesAdapter(
                 parent,
                 false
             ),
-            context,
-            viewModel
+            context
         ).apply {
             itemView.setOnClickListener {
                 val note = data[this.layoutPosition]

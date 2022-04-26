@@ -19,13 +19,6 @@ interface Interactor {
 
     fun getCurrentLogin(login: String): ParseQuery<ParseObject>?
 
-
-    suspend fun syncNotes(
-        isSyncingOn: Boolean,
-        login: String,
-        scope: CoroutineScope?
-    ): Flow<SyncState>
-
     suspend fun synchronizeNotes(
         isSyncingOn: Boolean,
         login: String,

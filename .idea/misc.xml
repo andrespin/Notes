@@ -10,22 +10,37 @@
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/back_note_green.xml" value="0.158" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/back_note_red.xml" value="0.158" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/back_note_yellow.xml" value="0.158" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/back_welcome_arrow.xml" value="0.1" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/button_field_red.xml" value="0.131" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/button_field_red_error.xml" value="0.131" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/button_field_yellow.xml" value="0.1195" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/button_field_yellow_error.xml" value="0.1195" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_add_photo.xml" value="0.1" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_bar_heart.xml" value="0.1235" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_bar_notes.xml" value="0.1" />
         <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_check_mark_green.xml" value="0.1" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_slide_notebook_one.xml" value="0.1" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_swipe_indicator_active.xml" value="0.1" />
+        <entry key="..\:/Career/Notes/app/src/main/res/drawable/ic_swipe_indicator_passive.xml" value="0.1" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_entrance.xml" value="0.11" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_logging.xml" value="0.125" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_note.xml" value="0.23802083333333332" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_notes.xml" value="0.125" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_profile.xml" value="0.11" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_settings.xml" value="0.1802448290417898" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/fragment_welcome.xml" value="0.11" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/item_rv_note_data.xml" value="0.2212962962962963" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/item_rv_two_notes_data.xml" value="0.12314814814814815" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/main_activity.xml" value="0.12314814814814815" />
-        <entry key="..\:/Career/Notes/app/src/main/res/layout/profile_authorized_content.xml" value="0.375" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/profile_authorized_content.xml" value="0.25" />
         <entry key="..\:/Career/Notes/app/src/main/res/layout/profile_not_authorized_content.xml" value="0.2212962962962963" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/slide_four.xml" value="0.1" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/slide_one.xml" value="0.11" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/slide_three.xml" value="0.18016877637130801" />
+        <entry key="..\:/Career/Notes/app/src/main/res/layout/slide_two.xml" value="0.18016877637130801" />
         <entry key="..\:/Career/Notes/app/src/main/res/menu/day_notes_menu.xml" value="0.22239583333333332" />
+        <entry key="..\:/Career/Notes/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1015625" />
         <entry key="..\:/Career/Notes/app/src/main/res/menu/sort_order.xml" value="0.21822916666666667" />
         <entry key="..\:/Career/Notes/app/src/main/res/menu/toolbar.xml" value="0.22239583333333332" />
       </map>

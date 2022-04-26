@@ -43,7 +43,6 @@ class NotesViewModel
     private val _state = MutableStateFlow<NotesState>(NotesState.Idle)
     val state: StateFlow<NotesState> get() = _state
 
-    // тут рабоатет
     private val _eventChannel = Channel<NotesEvent>(Channel.CONFLATED)
 
     val event: Channel<NotesEvent> = _eventChannel
@@ -66,6 +65,19 @@ class NotesViewModel
         setAuthorizationStatus(login, password)
     }
 
+    private fun isSyncEnabled(): Boolean =
+        regPreference.getSyncingState()
+
+    private fun setSwipeRefreshOn() =
+        viewModelScope.launch {
+            _eventChannel.send(NotesEvent.SwipeRefreshOn)
+        }
+
+    private fun setSwipeRefreshOff() =
+        viewModelScope.launch {
+            _eventChannel.send(NotesEvent.SwipeRefreshOff)
+        }
+
     private fun setAuthorizationStatus(login: String?, password: String?) {
         if (!login.isNullOrBlank() && !password.isNullOrBlank()) {
             setStateValue(
@@ -76,12 +88,15 @@ class NotesViewModel
                     )
                 )
             )
-
+            if (isSyncEnabled())
+                setSwipeRefreshOn()
+            else
+                setSwipeRefreshOff()
         } else {
             setStateValue(
                 NotesState.NotAuthorized
             )
-
+            setSwipeRefreshOff()
         }
     }
 
@@ -291,7 +306,6 @@ class NotesViewModel
         } else {
             hideBtn()
         }
-
     }
 
     private fun downloadNotes() {

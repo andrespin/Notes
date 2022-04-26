@@ -19,9 +19,15 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/favorites"
+        android:name="android.andrespin.notes.favorites.FavoriteNotesFragment"
+        tools:layout="@layout/fragment_favorite_notes" />
 
-
-
+    <fragment
+        android:id="@+id/settings"
+        android:name="android.andrespin.notes.settings.SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/note"
@@ -57,6 +63,13 @@
         android:id="@+id/entrance"
         android:name="android.andrespin.notes.profile.entrance.EntranceFragment"
         tools:layout="@layout/fragment_entrance">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/welcome"
+        android:name="android.andrespin.notes.welcome_slides.WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
 
     </fragment>
 

@@ -183,27 +183,6 @@ class Converter : TimeAndDate, DataTypes {
         return list
     }
 
-    /*
-            note.put(server_note_id, noteEntity.id)
-
-        note.put(server_note_header, noteEntity.header)
-
-        note.put(server_note_body, noteEntity.body)
-
-        note.put(server_note_time_hours, noteEntity.timeHours)
-
-        note.put(server_note_time_minutes, noteEntity.timeMinutes)
-
-        note.put(server_note_time_seconds, noteEntity.timeSeconds)
-
-        note.put(server_note_date_day, noteEntity.dateDay)
-
-        note.put(server_note_date_month, noteEntity.dateMonth)
-
-        note.put(server_note_date_year, noteEntity.dateYear)
-     */
-
-
     private fun getTime(
         timeHours: String,
         timeMinutes: String,

@@ -27,24 +27,13 @@ data class ServerState(val objects: List<ParseObject>?, val e: Exception?)
 class MainInteractor
 @Inject constructor(
     private val provideRepoLocal: IRepoLocal,
-    private val provideRepoRemote: IRepoRemote,
-    private val provideSorter: ISorter,
-    private val provideConverter: DataTypes
+    private val provideRepoRemote: IRepoRemote
 ) : Interactor {
 
     override fun setRegData(reg: RegData) = provideRepoRemote.setRegData(reg)
 
     override fun getCurrentLogin(login: String): ParseQuery<ParseObject>? =
         provideRepoRemote.getRegDataByLogin(login)
-
-    override suspend fun syncNotes(
-        isSyncingOn: Boolean,
-        login: String,
-        scope: CoroutineScope?
-    ): Flow<SyncState> = flow {
-
-    }
-
 
     override suspend fun synchronizeNotes(
         isSyncingOn: Boolean,
@@ -61,9 +50,7 @@ class MainInteractor
     override suspend fun getAllNotes(
         login: String
     ): ParseQuery<ParseObject>? =
-
         provideRepoRemote.getAllNotes(login)
-
 
     override suspend fun saveNotes(notes: List<NoteEntity>) {
         provideRepoLocal.insertNoteList(notes)
@@ -82,33 +69,17 @@ class MainInteractor
         provideRepoLocal.insertNoteList(missingNotesDb)
     }
 
-    fun flowTest(): Flow<FlowTest> = flow {
-        var j = 0
-        for (i in 0 until 10) {
-            j++
-            emit(FlowTest(j))
-        }
-    }
-
-    private suspend fun downloadNotesLocal() =
-        provideRepoLocal.getAllNotes()
-
-
-    private fun downloadNotesRemote(connected: Boolean): List<NoteEntity> {
-        TODO("Not yet implemented")
-    }
-
-
     override suspend fun saveNote(
         noteEntity: NoteEntity,
         isAuthorized: Boolean,
         isConnected: Boolean
     ) {
         if (isAuthorized) {
-            saveNoteOnServer(noteEntity)
-            saveNoteToDb(noteEntity)
+            //   provideRepoRemote.setNote()
+            provideRepoLocal.insertNote(noteEntity)
+
         } else {
-            saveNoteToDb(noteEntity)
+            provideRepoLocal.insertNote(noteEntity)
         }
     }
 
@@ -147,14 +118,6 @@ class MainInteractor
         } else {
             provideRepoLocal.deleteNoteList(noteEntity)
         }
-    }
-
-    private suspend fun saveNoteToDb(noteEntity: NoteEntity) {
-        provideRepoLocal.insertNote(noteEntity)
-    }
-
-    private fun saveNoteOnServer(noteEntity: NoteEntity) {
-
     }
 
     override suspend fun saveNoteList(

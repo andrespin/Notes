@@ -16,6 +16,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -31,7 +32,7 @@ class NoteViewModel
     private val provideMainInteractor: Interactor,
     private val provideDataTypeConverter: DataTypes,
 
-) : BaseViewModel() {
+    ) : BaseViewModel() {
 
     val intent = Channel<NoteIntent>(Channel.UNLIMITED)
 
@@ -69,7 +70,11 @@ class NoteViewModel
         }
     }
 
-    private fun getNoteById(it: NoteIntent.GetNoteById) {
+    private suspend fun getNoteById(it: NoteIntent.GetNoteById) {
+        setStateValue(
+            NoteState.Idle
+        )
+        delay(1)
         viewModelScope.launch(Dispatchers.IO) {
             if (it.id != null) {
                 val noteEntity = provideMainInteractor.getNoteById(it.id)

@@ -16,6 +16,4 @@ interface DataTypes {
 
     fun convertParseObjectToNoteEntityList(objects: List<ParseObject>): List<NoteEntity>
 
-    // objects: List<ParseObject>
-
 }

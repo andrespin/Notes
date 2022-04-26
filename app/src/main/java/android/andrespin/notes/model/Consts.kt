@@ -6,6 +6,8 @@ const val login_key = "LOGIN_KEY"
 
 const val password_key = "PASSWORD_KEY"
 
+const val hasUserComeBefore = "user_has_already_come_before"
+
 const val login_server = "Login"
 
 const val pass_server = "Password"
@@ -13,6 +15,12 @@ const val pass_server = "Password"
 const val reg_preferences = "REGISTRATION_PREFERENCES"
 
 const val syncingState = "Syncing status"
+
+const val syncingResult = "Syncing result"
+
+const val syncingResultSuccess = "Success"
+
+const val syncingResultError = "Error"
 
 const val dateFormat = "yyyy.MM.dd '-' HH:mm:ss"
 

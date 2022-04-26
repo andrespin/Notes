@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".welcome_slides.WelcomeFragment">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/viewPager_height"
+        app:layout_constraintBottom_toTopOf="@+id/imgNextRound"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+
+    <ImageView
+        android:id="@+id/imgNextRound"
+        android:layout_width="@dimen/imgNextRound_w"
+        android:layout_height="@dimen/imgNextRound_h"
+        android:layout_marginEnd="@dimen/imgNextRound_marginEnd"
+        android:layout_marginBottom="@dimen/imgNextRound_marginBottom"
+        android:src="@drawable/back_welcome_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_next_slide_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/imgNextRound"
+        app:layout_constraintEnd_toEndOf="@+id/imgNextRound"
+        app:layout_constraintStart_toStartOf="@+id/imgNextRound"
+        app:layout_constraintTop_toTopOf="@+id/imgNextRound" />
+
+
+
+    <ImageView
+        android:id="@+id/imgOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/imgOne_marginEnd"
+        android:layout_marginBottom="@dimen/imgOne_marginBottom"
+        android:src="@drawable/ic_swipe_indicator_active"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgTwo" />
+
+    <ImageView
+        android:id="@+id/imgTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/imgTwo_marginEnd"
+        android:layout_marginBottom="@dimen/imgTwo_marginBottom"
+        android:src="@drawable/ic_swipe_indicator_passive"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgThree" />
+
+    <ImageView
+        android:id="@+id/imgThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/imgThree_marginEnd"
+        android:layout_marginBottom="@dimen/imgThree_marginBottom"
+        android:src="@drawable/ic_swipe_indicator_passive"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgFour" />
+
+    <ImageView
+        android:id="@+id/imgFour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/imgFour_marginEnd"
+        android:layout_marginBottom="@dimen/imgFour_marginBottom"
+        android:src="@drawable/ic_swipe_indicator_passive"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class NotesViewHolder(
     private val vb: ItemRvNoteDataBinding,
-    private val context: Context,
-    private val viewModel: NotesViewModel
+    private val context: Context
 ) : RecyclerView.ViewHolder(vb.root) {
 
     fun bind(note: NoteData) {
@@ -29,7 +28,6 @@ class NotesViewHolder(
             )
         vb.backImgNoteChecked.visibility = note.checkedVisibility
 
-      //  vb.backImgNoteChecked.visibility = note.checkedVisibility
     }
 
 }

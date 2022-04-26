@@ -29,4 +29,6 @@
     <color name="green_checked">#8C97FFFF</color>
     <color name="green_note_txt">#23B0B0</color>
 
+    <color name="menu_bottom_nav_color">#55A370</color>
+
 </resources>

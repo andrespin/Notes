@@ -1,0 +1,21 @@
+<resources>
+	<dimen name="TestDp">264dp</dimen>
+	<dimen name="imgNextRound_w">142.5dp</dimen>
+	<dimen name="imgNextRound_h">142.5dp</dimen>
+	<dimen name="imgNextRound_marginEnd">37.5dp</dimen>
+	<dimen name="imgNextRound_marginBottom">37.5dp</dimen>
+	<dimen name="imgOne_marginBottom">150dp</dimen>
+	<dimen name="imgOne_marginEnd">25dp</dimen>
+	<dimen name="imgTwo_marginEnd">25dp</dimen>
+	<dimen name="imgTwo_marginBottom">150dp</dimen>
+	<dimen name="imgThree_marginBottom">150dp</dimen>
+	<dimen name="imgThree_marginEnd">25dp</dimen>
+	<dimen name="imgFour_marginBottom">150dp</dimen>
+	<dimen name="imgFour_marginEnd">225dp</dimen>
+	<dimen name="viewPager_marginBottom">30dp</dimen>
+	<dimen name="viewPager_height">645dp</dimen>
+	<dimen name="imageSlide_margin">65dp</dimen>
+    <dimen name="MainImgSlide">170dp</dimen>
+
+
+</resources>

@@ -87,12 +87,6 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
 
         }
 
-//        rvNotesSwipeRefreshLayout.setOnRefreshListener {
-//
-//            rvNotesSwipeRefreshLayout.isRefreshing = false
-//        }
-
-
     }
 
     private fun showSortMenu(view: View) {
@@ -158,10 +152,20 @@ class NotesFragment() : BaseFragment<FragmentNotesBinding, NotesViewModel>() {
                     is NotesEvent.HideButtons -> hideButtons()
                     is NotesEvent.NotesFromServer -> setNotesFromServerToAdapter(it)
                     is NotesEvent.Error -> toastMessage("Ошибка")
+                    is NotesEvent.SwipeRefreshOn -> swipeRefreshOn()
+                    is NotesEvent.SwipeRefreshOff -> swipeRefreshOff()
                 }
             }
         }
 
+    }
+
+    private fun swipeRefreshOff() {
+        viewBinding.rvNotesSwipeRefreshLayout.isEnabled = false
+    }
+
+    private fun swipeRefreshOn() {
+        viewBinding.rvNotesSwipeRefreshLayout.isEnabled = true
     }
 
     private fun setNotesFromServerToAdapter(it: NotesEvent.NotesFromServer) {

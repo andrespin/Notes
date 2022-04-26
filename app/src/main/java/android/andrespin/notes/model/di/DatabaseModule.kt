@@ -8,9 +8,6 @@ import android.andrespin.notes.model.repository.IRepoLocal
 import android.andrespin.notes.model.repository.IRepoRemote
 import android.andrespin.notes.model.repository.RepoLocal
 import android.andrespin.notes.model.repository.RepoRemote
-import android.andrespin.notes.utils.converter.DataTypes
-import android.andrespin.notes.utils.sorter.ISorter
-import android.andrespin.notes.utils.sorter.Sorter
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
@@ -42,17 +39,11 @@ class DatabaseModule {
     internal fun provideRepoRemote(): IRepoRemote =
         RepoRemote()
 
-//    @Provides
-//    internal fun provideSorter(): ISorter = Sorter()
-
-
     @Provides
     internal fun provideMainInteractor(
         repoLocal: IRepoLocal,
         repoRemote: IRepoRemote,
-        sorter: ISorter,
-        conv: DataTypes
     ): Interactor =
-        MainInteractor(repoLocal, repoRemote, sorter, conv)
+        MainInteractor(repoLocal, repoRemote)
 
 }

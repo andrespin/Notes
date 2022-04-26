@@ -137,33 +137,4 @@ class RepoRemote : IRepoRemote {
 
     }
 
-
-    /*
-   adapter.onDeleteListener.observe(this@MainActivity, { parseObject ->
-            progressDialog?.show()
-            parseObject.deleteInBackground { e ->
-                progressDialog?.dismiss()
-                if (e == null) {
-                    //We deleted the object and fetching data again.
-                    getTodoList()
-                } else {
-                    showAlert("Error", e.message!!)
-                }
-            }
-        })
-     */
-
-
-    private fun handleData(objects: List<ParseObject>) {
-
-        for (i in 0 until objects.size) {
-            println(
-                "${objects[i].getString(login_server)} , " +
-                        " ${objects[i].getString(pass_server)}"
-            )
-
-        }
-    }
-
-
 }

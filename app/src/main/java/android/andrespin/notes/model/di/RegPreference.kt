@@ -34,6 +34,21 @@ class RegPreference @Inject constructor(@ApplicationContext context: Context) {
 
     fun getSyncingState() = prefs.getBoolean(syncingState, true)
 
+    fun getSyncingResult() = prefs.getString(syncingResult, "")
+
+    fun setHasUserComeBefore() = prefs.edit().putString("hasUserComeBefore", hasUserComeBefore)
+        .apply()
+
+    fun getHasUserComeBefore() = prefs.getString("hasUserComeBefore", "")
+
+    fun setSyncyngResult(res: SyncingResult) =
+        when (res) {
+            SyncingResult.Success ->
+                prefs.edit().putString(syncingResult, syncingResultSuccess).apply()
+            SyncingResult.Error ->
+                prefs.edit().putString(syncingResult, syncingResultError).apply()
+        }
+
     fun getPassword() = prefs.getString(password_key, "")
 
     fun removeAllRegData() {
@@ -42,4 +57,8 @@ class RegPreference @Inject constructor(@ApplicationContext context: Context) {
         prefs.edit().remove(login_key).apply()
     }
 
+}
+
+enum class SyncingResult {
+    Success, Error
 }
