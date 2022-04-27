@@ -48,7 +48,7 @@ class MainViewModel @Inject constructor(
 
     private fun check() {
 
-        setStateValue(MainState.FirstLaunch)
+        setStateValue(MainState.Launch)
 
 //        println("regPreference.getHasUserComeBefore() ${regPreference.getHasUserComeBefore()}")
 //        if (regPreference.getHasUserComeBefore() == hasUserComeBefore) {
